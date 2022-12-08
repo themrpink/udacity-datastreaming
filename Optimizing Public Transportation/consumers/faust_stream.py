@@ -78,7 +78,7 @@ async def process(stream):
             logger.debug(f"No line color found with station = {station.station_id}")
             line = ''
 
-        table[event.station_id] = TransformedStation(
+        table[station.station_id] = TransformedStation(
                 station_id=station.station_id,
                 station_name=station.station_name,
                 order=station.order,
