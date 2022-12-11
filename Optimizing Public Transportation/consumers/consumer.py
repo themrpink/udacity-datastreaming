@@ -39,7 +39,7 @@ class KafkaConsumer:
         self.broker_properties = {
             "bootstrap.servers": "PLAINTEXT://localhost:9092",
             "group.id": f"{topic_name_pattern}",
-            "default.topic.config": {"auto.offset.reset": "earliest"},
+            "default.topic.config": "earliest" if offset_earliest else "latest"
         }
 
         # TODO: Create the Consumer, using the appropriate type.
@@ -91,17 +91,15 @@ class KafkaConsumer:
         # is retrieved.
         #
         #
-        while True:
-            message = self.consumer.poll(self.consumer.consume_timeout)
-            if message is None:
-                logger.WARN("no message")
-                return 0
-            elif message.error() is not None:
-                logger.ERROR(f"error: {message.error()}")
-                return 0
-            else:
-                return 1
-        return 0
+        message = self.consumer.poll(self.consumer.consume_timeout)
+        if message is None:
+            logger.WARN("no message")
+            return 0
+        elif message.error() is not None:
+            logger.ERROR(f"error: {message.error()}")
+            return 0)
+        self.message_handler(message)
+        return 1
 
 
     def close(self):
