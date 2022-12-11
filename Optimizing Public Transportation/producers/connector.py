@@ -51,7 +51,7 @@ def configure_connector():
                "table.whitelist": CONNECTOR_NAME,
                "mode": "incrementing",
                "incrementing.column.name": "stop_id",
-            #   "topic.prefix": "com.udacity.cta.",
+               "topic.prefix": "com.udacity.cta.",
                "poll.interval.ms": "100000",
                "batch.max.rows": "100",
            }
